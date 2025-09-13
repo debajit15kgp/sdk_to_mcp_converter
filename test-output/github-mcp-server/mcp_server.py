@@ -15,6 +15,7 @@ from pathlib import Path
 # MCP imports
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
+from mcp.server.lowlevel.server import NotificationOptions
 from mcp.server.stdio import stdio_server
 from mcp.types import (
     Resource, Tool, TextContent, ImageContent, EmbeddedResource,
@@ -22,6 +23,7 @@ from mcp.types import (
     ReadResourceRequest, ReadResourceResult, GetPromptRequest, GetPromptResult,
     Prompt, PromptMessage, PromptArgument
 )
+from mcp import types
 
 # SDK imports
 import github
@@ -83,7 +85,7 @@ class AuthenticationManager:
 auth_manager = AuthenticationManager()
 
 
-async def handle_authentication(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_authentication(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle authentication tool call.
     
     Execute authentication operation
@@ -102,18 +104,13 @@ async def handle_authentication(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"authentication executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing authentication: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_mask_authentication(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_mask_authentication(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle mask_authentication tool call.
     
     Execute mask_authentication operation
@@ -132,18 +129,13 @@ async def handle_mask_authentication(arguments: Dict[str, Any]) -> CallToolResul
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"mask_authentication executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing mask_authentication: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_withRequester(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_withRequester(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle withRequester tool call.
     
     Execute withRequester operation
@@ -162,18 +154,13 @@ async def handle_withRequester(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"withRequester executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing withRequester: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_close(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_close(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle close tool call.
     
     Execute close operation
@@ -192,18 +179,13 @@ async def handle_close(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"close executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing close: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_create_from_raw_data(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_create_from_raw_data(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle create_from_raw_data tool call.
     
     Execute create_from_raw_data operation
@@ -222,18 +204,13 @@ async def handle_create_from_raw_data(arguments: Dict[str, Any]) -> CallToolResu
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"create_from_raw_data executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing create_from_raw_data: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_dump(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_dump(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle dump tool call.
     
     Execute dump operation
@@ -252,18 +229,13 @@ async def handle_dump(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"dump executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing dump: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_app(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_app(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_app tool call.
     
     Execute get_app operation
@@ -282,18 +254,13 @@ async def handle_get_app(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_app executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_app: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_emojis(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_emojis(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_emojis tool call.
     
     Execute get_emojis operation
@@ -312,18 +279,13 @@ async def handle_get_emojis(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_emojis executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_emojis: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_enterprise(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_enterprise(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_enterprise tool call.
     
     Execute get_enterprise operation
@@ -342,18 +304,13 @@ async def handle_get_enterprise(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_enterprise executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_enterprise: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_events(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_events(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_events tool call.
     
     Execute get_events operation
@@ -372,18 +329,13 @@ async def handle_get_events(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_events executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_events: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_gist(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_gist(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_gist tool call.
     
     Execute get_gist operation
@@ -402,18 +354,13 @@ async def handle_get_gist(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_gist executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_gist: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_gists(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_gists(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_gists tool call.
     
     Execute get_gists operation
@@ -432,18 +379,13 @@ async def handle_get_gists(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_gists executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_gists: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_gitignore_template(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_gitignore_template(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_gitignore_template tool call.
     
     Execute get_gitignore_template operation
@@ -462,18 +404,13 @@ async def handle_get_gitignore_template(arguments: Dict[str, Any]) -> CallToolRe
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_gitignore_template executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_gitignore_template: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_gitignore_templates(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_gitignore_templates(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_gitignore_templates tool call.
     
     Execute get_gitignore_templates operation
@@ -492,18 +429,13 @@ async def handle_get_gitignore_templates(arguments: Dict[str, Any]) -> CallToolR
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_gitignore_templates executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_gitignore_templates: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_global_advisories(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_global_advisories(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_global_advisories tool call.
     
     Execute get_global_advisories operation
@@ -522,18 +454,13 @@ async def handle_get_global_advisories(arguments: Dict[str, Any]) -> CallToolRes
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_global_advisories executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_global_advisories: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_global_advisory(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_global_advisory(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_global_advisory tool call.
     
     Execute get_global_advisory operation
@@ -552,18 +479,13 @@ async def handle_get_global_advisory(arguments: Dict[str, Any]) -> CallToolResul
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_global_advisory executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_global_advisory: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_hook(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_hook(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_hook tool call.
     
     Execute get_hook operation
@@ -582,18 +504,13 @@ async def handle_get_hook(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_hook executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_hook: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_hook_deliveries(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_hook_deliveries(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_hook_deliveries tool call.
     
     Execute get_hook_deliveries operation
@@ -612,18 +529,13 @@ async def handle_get_hook_deliveries(arguments: Dict[str, Any]) -> CallToolResul
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_hook_deliveries executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_hook_deliveries: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_hook_delivery(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_hook_delivery(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_hook_delivery tool call.
     
     Execute get_hook_delivery operation
@@ -642,18 +554,13 @@ async def handle_get_hook_delivery(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_hook_delivery executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_hook_delivery: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_hooks(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_hooks(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_hooks tool call.
     
     Execute get_hooks operation
@@ -672,18 +579,13 @@ async def handle_get_hooks(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_hooks executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_hooks: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_license(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_license(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_license tool call.
     
     Execute get_license operation
@@ -702,18 +604,13 @@ async def handle_get_license(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_license executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_license: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_licenses(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_licenses(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_licenses tool call.
     
     Execute get_licenses operation
@@ -732,18 +629,13 @@ async def handle_get_licenses(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_licenses executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_licenses: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_oauth_application(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_oauth_application(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_oauth_application tool call.
     
     Execute get_oauth_application operation
@@ -762,18 +654,13 @@ async def handle_get_oauth_application(arguments: Dict[str, Any]) -> CallToolRes
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_oauth_application executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_oauth_application: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_organization(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_organization(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_organization tool call.
     
     Execute get_organization operation
@@ -792,18 +679,13 @@ async def handle_get_organization(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_organization executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_organization: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_organizations(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_organizations(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_organizations tool call.
     
     Execute get_organizations operation
@@ -822,18 +704,13 @@ async def handle_get_organizations(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_organizations executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_organizations: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_project(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_project(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_project tool call.
     
     Execute get_project operation
@@ -852,18 +729,13 @@ async def handle_get_project(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_project executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_project: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_project_column(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_project_column(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_project_column tool call.
     
     Execute get_project_column operation
@@ -882,18 +754,13 @@ async def handle_get_project_column(arguments: Dict[str, Any]) -> CallToolResult
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_project_column executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_project_column: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_rate_limit(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_rate_limit(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_rate_limit tool call.
     
     Execute get_rate_limit operation
@@ -912,18 +779,13 @@ async def handle_get_rate_limit(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_rate_limit executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_rate_limit: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_repo(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_repo(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_repo tool call.
     
     Execute get_repo operation
@@ -942,18 +804,13 @@ async def handle_get_repo(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_repo executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_repo: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_repos(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_repos(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_repos tool call.
     
     Execute get_repos operation
@@ -972,18 +829,13 @@ async def handle_get_repos(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_repos executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_repos: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_repository_discussion(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_repository_discussion(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_repository_discussion tool call.
     
     Execute get_repository_discussion operation
@@ -1002,18 +854,13 @@ async def handle_get_repository_discussion(arguments: Dict[str, Any]) -> CallToo
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_repository_discussion executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_repository_discussion: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_user(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_user(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_user tool call.
     
     Execute get_user operation
@@ -1032,18 +879,13 @@ async def handle_get_user(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_user executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_user: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_user_by_id(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_user_by_id(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_user_by_id tool call.
     
     Execute get_user_by_id operation
@@ -1062,18 +904,13 @@ async def handle_get_user_by_id(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_user_by_id executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_user_by_id: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_users(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_users(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_users tool call.
     
     Execute get_users operation
@@ -1092,18 +929,13 @@ async def handle_get_users(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_users executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_users: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_load(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_load(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle load tool call.
     
     Execute load operation
@@ -1122,18 +954,13 @@ async def handle_load(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"load executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing load: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_render_markdown(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_render_markdown(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle render_markdown tool call.
     
     Execute render_markdown operation
@@ -1152,18 +979,13 @@ async def handle_render_markdown(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"render_markdown executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing render_markdown: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_search_code(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_search_code(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle search_code tool call.
     
     Execute search_code operation
@@ -1182,18 +1004,13 @@ async def handle_search_code(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"search_code executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing search_code: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_search_commits(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_search_commits(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle search_commits tool call.
     
     Execute search_commits operation
@@ -1212,18 +1029,13 @@ async def handle_search_commits(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"search_commits executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing search_commits: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_search_issues(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_search_issues(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle search_issues tool call.
     
     Execute search_issues operation
@@ -1242,18 +1054,13 @@ async def handle_search_issues(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"search_issues executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing search_issues: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_search_repositories(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_search_repositories(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle search_repositories tool call.
     
     Execute search_repositories operation
@@ -1272,18 +1079,13 @@ async def handle_search_repositories(arguments: Dict[str, Any]) -> CallToolResul
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"search_repositories executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing search_repositories: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_search_topics(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_search_topics(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle search_topics tool call.
     
     Execute search_topics operation
@@ -1302,18 +1104,13 @@ async def handle_search_topics(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"search_topics executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing search_topics: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_search_users(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_search_users(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle search_users tool call.
     
     Execute search_users operation
@@ -1332,18 +1129,13 @@ async def handle_search_users(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"search_users executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing search_users: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_withLazy(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_withLazy(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle withLazy tool call.
     
     Execute withLazy operation
@@ -1362,18 +1154,13 @@ async def handle_withLazy(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"withLazy executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing withLazy: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_close(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_close(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle close tool call.
     
     Execute close operation
@@ -1392,18 +1179,13 @@ async def handle_close(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"close executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing close: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_create_jwt(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_create_jwt(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle create_jwt tool call.
     
     Execute create_jwt operation
@@ -1422,18 +1204,13 @@ async def handle_create_jwt(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"create_jwt executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing create_jwt: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_access_token(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_access_token(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_access_token tool call.
     
     Execute get_access_token operation
@@ -1452,18 +1229,13 @@ async def handle_get_access_token(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_access_token executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_access_token: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_app(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_app(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_app tool call.
     
     Execute get_app operation
@@ -1482,18 +1254,13 @@ async def handle_get_app(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_app executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_app: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_app_installation(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_app_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_app_installation tool call.
     
     Execute get_app_installation operation
@@ -1512,18 +1279,13 @@ async def handle_get_app_installation(arguments: Dict[str, Any]) -> CallToolResu
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_app_installation executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_app_installation: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_github_for_installation(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_github_for_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_github_for_installation tool call.
     
     Execute get_github_for_installation operation
@@ -1542,18 +1304,13 @@ async def handle_get_github_for_installation(arguments: Dict[str, Any]) -> CallT
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_github_for_installation executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_github_for_installation: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_installation(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_installation tool call.
     
     Execute get_installation operation
@@ -1572,18 +1329,13 @@ async def handle_get_installation(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_installation executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_installation: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_installations(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_installations(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_installations tool call.
     
     Execute get_installations operation
@@ -1602,18 +1354,13 @@ async def handle_get_installations(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_installations executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_installations: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_org_installation(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_org_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_org_installation tool call.
     
     Execute get_org_installation operation
@@ -1632,18 +1379,13 @@ async def handle_get_org_installation(arguments: Dict[str, Any]) -> CallToolResu
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_org_installation executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_org_installation: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_repo_installation(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_repo_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_repo_installation tool call.
     
     Execute get_repo_installation operation
@@ -1662,18 +1404,13 @@ async def handle_get_repo_installation(arguments: Dict[str, Any]) -> CallToolRes
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_repo_installation executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_repo_installation: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_user_installation(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_user_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_user_installation tool call.
     
     Execute get_user_installation operation
@@ -1692,18 +1429,13 @@ async def handle_get_user_installation(arguments: Dict[str, Any]) -> CallToolRes
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_user_installation executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_user_installation: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_withLazy(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_withLazy(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle withLazy tool call.
     
     Execute withLazy operation
@@ -1722,18 +1454,13 @@ async def handle_withLazy(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"withLazy executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing withLazy: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_backoff_time(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_backoff_time(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_backoff_time tool call.
     
     Execute get_backoff_time operation
@@ -1752,18 +1479,13 @@ async def handle_get_backoff_time(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_backoff_time executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_backoff_time: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_content(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_content(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_content tool call.
     
     Execute get_content operation
@@ -1782,18 +1504,13 @@ async def handle_get_content(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_content executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_content: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_retry_after(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_get_retry_after(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_retry_after tool call.
     
     Execute get_retry_after operation
@@ -1812,18 +1529,13 @@ async def handle_get_retry_after(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"get_retry_after executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing get_retry_after: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_increment(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_increment(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle increment tool call.
     
     Execute increment operation
@@ -1842,18 +1554,13 @@ async def handle_increment(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"increment executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing increment: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_is_exhausted(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_is_exhausted(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle is_exhausted tool call.
     
     Execute is_exhausted operation
@@ -1872,18 +1579,13 @@ async def handle_is_exhausted(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"is_exhausted executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing is_exhausted: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_is_retry(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_is_retry(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle is_retry tool call.
     
     Execute is_retry operation
@@ -1902,18 +1604,13 @@ async def handle_is_retry(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"is_retry executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing is_retry: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_new(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_new(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle new tool call.
     
     Execute new operation
@@ -1932,18 +1629,13 @@ async def handle_new(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"new executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing new: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_parse_retry_after(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_parse_retry_after(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle parse_retry_after tool call.
     
     Execute parse_retry_after operation
@@ -1962,18 +1654,13 @@ async def handle_parse_retry_after(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"parse_retry_after executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing parse_retry_after: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_sleep(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_sleep(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle sleep tool call.
     
     Execute sleep operation
@@ -1992,18 +1679,13 @@ async def handle_sleep(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"sleep executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing sleep: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_sleep_for_retry(arguments: Dict[str, Any]) -> CallToolResult:
+async def handle_sleep_for_retry(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle sleep_for_retry tool call.
     
     Execute sleep_for_retry operation
@@ -2022,16 +1704,11 @@ async def handle_sleep_for_retry(arguments: Dict[str, Any]) -> CallToolResult:
         # TODO: Implement actual SDK method call
         result = {"status": "success", "message": f"sleep_for_retry executed successfully"}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing sleep_for_retry: {e}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {str(e)}")],
-            isError=True
-        )
+        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
 # No resources generated
 
@@ -2377,7 +2054,7 @@ class GithubMCPServer:
             ]
         
         @self.server.call_tool()
-        async def call_tool(name: str, arguments: Dict[str, Any]) -> CallToolResult:
+        async def call_tool(name: str, arguments: Dict[str, Any]) -> List[types.ContentBlock]:
             """Handle tool calls."""
             tool_handlers = {
                 "authentication": handle_authentication,
@@ -2489,7 +2166,7 @@ class GithubMCPServer:
                     server_name="github-mcp-server",
                     server_version="1.0.0",
                     capabilities=self.server.get_capabilities(
-                        notification_options=None,
+                        notification_options=NotificationOptions(),
                         experimental_capabilities=None
                     )
                 )

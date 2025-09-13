@@ -1,16 +1,15 @@
+#!/usr/bin/env python3
 """
-Example usage of the Github MCP Server
-
-This file demonstrates how to interact with the generated MCP server.
+Example usage of the github MCP server.
 """
 
-import json
 import asyncio
-from mcp.client import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
+from mcp.client.session import ClientSession
+from mcp.client.stdio import stdio_client, StdioServerParameters
 
 async def main():
-    """Example usage of the MCP server."""
+    """Example client usage."""
+    print("🚀 Connecting to github MCP server...")
     
     # Connect to the MCP server
     server_params = StdioServerParameters(
@@ -25,45 +24,57 @@ async def main():
             
             # List available tools
             tools = await session.list_tools()
-            print("Available tools:")
+            print(f"Available tools: {len(tools.tools)}")
             for tool in tools.tools:
                 print(f"- {tool.name}: {tool.description}")
             
             # Example tool calls
-            examples = [
+            print(f"\nExecuting: authentication")
+            result = await session.call_tool("authentication", {})
+            print(f"Result: {result.content[0].text if result.content else 'No content'}")
+            print(f"\nExecuting: mask_authentication")
+            result = await session.call_tool("mask_authentication", {})
+            print(f"Result: {result.content[0].text if result.content else 'No content'}")
+            print(f"\nExecuting: withRequester")
+            result = await session.call_tool("withRequester", {})
+            print(f"Result: {result.content[0].text if result.content else 'No content'}")
 
-# Example: authentication
-{
-    "tool": "authentication",
-    "arguments": {}
-},
-
-# Example: mask_authentication
-{
-    "tool": "mask_authentication",
-    "arguments": {}
-},
-
-# Example: withRequester
-{
-    "tool": "withRequester",
-    "arguments": {}
-}
-            ]
             
-            for example in examples:
-                print(f"\nExecuting: {example['tool']}")
-                try:
-                    result = await session.call_tool(example["tool"], example["arguments"])
-                    print(f"Result: {result.content[0].text}")
-                except Exception as e:
-                    print(f"Error: {e}")
-            
-            # List available resources
+            # List resources
             resources = await session.list_resources()
-            print("\nAvailable resources:")
-            for resource in resources.resources:
-                print(f"- {resource.name}: {resource.description}")
+            print(f"\nAvailable resources: {len(resources.resources)}")
+
+
+async def call_authentication(session):
+    """Call authentication tool."""
+    try:
+        result = await session.call_tool("authentication", {})
+        print(f"✅ authentication: {result.content[0].text if result.content else 'Success'}")
+        return result
+    except Exception as e:
+        print(f"❌ authentication failed: {e}")
+        return None
+
+async def call_mask_authentication(session):
+    """Call mask_authentication tool."""
+    try:
+        result = await session.call_tool("mask_authentication", {})
+        print(f"✅ mask_authentication: {result.content[0].text if result.content else 'Success'}")
+        return result
+    except Exception as e:
+        print(f"❌ mask_authentication failed: {e}")
+        return None
+
+async def call_withRequester(session):
+    """Call withRequester tool."""
+    try:
+        result = await session.call_tool("withRequester", {})
+        print(f"✅ withRequester: {result.content[0].text if result.content else 'Success'}")
+        return result
+    except Exception as e:
+        print(f"❌ withRequester failed: {e}")
+        return None
+
 
 if __name__ == "__main__":
     asyncio.run(main())
