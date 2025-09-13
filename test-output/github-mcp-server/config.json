@@ -1,0 +1,13 @@
+{
+  "sdk_name": "github",
+  "sdk_module": "github",
+  "generated_at": "2024-01-01T00:00:00Z",
+  "tools_count": 65,
+  "resources_count": 0,
+  "credentials": {},
+  "settings": {
+    "max_retries": 3,
+    "timeout": 30,
+    "log_level": "INFO"
+  }
+}

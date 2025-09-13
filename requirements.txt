@@ -1,0 +1,14 @@
+openai>=1.0.0
+mcp>=1.0.0
+typing-extensions>=4.0.0
+asyncio
+pathlib
+dataclasses
+json
+inspect
+importlib
+ast
+sys
+os
+pathlib
+typing
