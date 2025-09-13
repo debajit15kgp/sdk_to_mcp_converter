@@ -112,6 +112,7 @@ from pathlib import Path
 # MCP imports
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
+from mcp.server.lowlevel.server import NotificationOptions
 from mcp.server.stdio import stdio_server
 from mcp.types import (
     Resource, Tool, TextContent, ImageContent, EmbeddedResource,
@@ -119,6 +120,7 @@ from mcp.types import (
     ReadResourceRequest, ReadResourceResult, GetPromptRequest, GetPromptResult,
     Prompt, PromptMessage, PromptArgument
 )
+from mcp import types
 
 # SDK imports
 import {module_name}
@@ -409,7 +411,7 @@ auth_manager = AuthenticationManager()
         param_validation_code = "\n".join(param_validation)
         param_extraction_code = "\n".join(param_extraction)
         
-        return f'''async def handle_{tool_name}(arguments: Dict[str, Any]) -> CallToolResult:
+        return f'''async def handle_{tool_name}(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle {tool_name} tool call.
     
     {description}
@@ -428,16 +430,11 @@ auth_manager = AuthenticationManager()
         # TODO: Implement actual SDK method call
         result = {{"status": "success", "message": f"{tool_name} executed successfully"}}
         
-        return CallToolResult(
-            content=[TextContent(type="text", text=json.dumps(result, indent=2))]
-        )
+        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
         
     except Exception as e:
         logger.error(f"Error executing {tool_name}: {{e}}")
-        return CallToolResult(
-            content=[TextContent(type="text", text=f"Error: {{str(e)}}")],
-            isError=True
-        )'''
+        return [types.TextContent(type="text", text=f"Error: {{str(e)}}")]'''
     
     def _generate_resource_handlers(self, resources: List[Dict[str, Any]], sdk_info: Dict[str, Any]) -> str:
         """Generate resource handler functions."""
@@ -510,7 +507,7 @@ auth_manager = AuthenticationManager()
             ]
         
         @self.server.call_tool()
-        async def call_tool(name: str, arguments: Dict[str, Any]) -> CallToolResult:
+        async def call_tool(name: str, arguments: Dict[str, Any]) -> List[types.ContentBlock]:
             """Handle tool calls."""
             tool_handlers = {{
 {self._indent_tool_handlers(tools)}
@@ -558,7 +555,7 @@ auth_manager = AuthenticationManager()
                     server_name="{config.sdk_name.lower()}-mcp-server",
                     server_version="1.0.0",
                     capabilities=self.server.get_capabilities(
-                        notification_options=None,
+                        notification_options=NotificationOptions(),
                         experimental_capabilities=None
                     )
                 )
@@ -956,3 +953,75 @@ class TestIntegration:
 if __name__ == "__main__":
     pytest.main([__file__])
 '''
+    
+    def _generate_example_usage(self, sdk_info: Dict[str, Any], analyzed_methods: Dict[str, Any], config: Any) -> str:
+        """Generate example usage file."""
+        tools = analyzed_methods.get("tools", [])
+        tool_names = [tool.get("name", "unknown_tool") for tool in tools[:3]]  # Show first 3 tools
+        
+        return f'''#!/usr/bin/env python3
+"""
+Example usage of the {config.sdk_name} MCP server.
+"""
+
+import asyncio
+from mcp.client.session import ClientSession
+from mcp.client.stdio import stdio_client, StdioServerParameters
+
+async def main():
+    """Example client usage."""
+    print("🚀 Connecting to {config.sdk_name} MCP server...")
+    
+    # Connect to the MCP server
+    server_params = StdioServerParameters(
+        command="python",
+        args=["mcp_server.py"]
+    )
+    
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            # Initialize the session
+            await session.initialize()
+            
+            # List available tools
+            tools = await session.list_tools()
+            print(f"Available tools: {{len(tools.tools)}}")
+            for tool in tools.tools:
+                print(f"- {{tool.name}}: {{tool.description}}")
+            
+            # Example tool calls
+            {self._generate_example_tool_calls(tool_names)}
+            
+            # List resources
+            resources = await session.list_resources()
+            print(f"\\nAvailable resources: {{len(resources.resources)}}")
+
+{self._generate_example_tool_call_functions(tool_names)}
+
+if __name__ == "__main__":
+    asyncio.run(main())
+'''
+    
+    def _generate_example_tool_calls(self, tool_names: List[str]) -> str:
+        """Generate example tool call code."""
+        calls = []
+        for tool_name in tool_names:
+            calls.append(f'            print(f"\\nExecuting: {tool_name}")\n            result = await session.call_tool("{tool_name}", {{}})\n            print(f"Result: {{result.content[0].text if result.content else \'No content\'}}")\n')
+        return "".join(calls)
+    
+    def _generate_example_tool_call_functions(self, tool_names: List[str]) -> str:
+        """Generate helper functions for tool calls."""
+        functions = []
+        for tool_name in tool_names:
+            functions.append(f'''
+async def call_{tool_name}(session):
+    """Call {tool_name} tool."""
+    try:
+        result = await session.call_tool("{tool_name}", {{}})
+        print(f"✅ {tool_name}: {{result.content[0].text if result.content else \'Success\'}}")
+        return result
+    except Exception as e:
+        print(f"❌ {tool_name} failed: {{e}}")
+        return None
+''')
+        return "".join(functions)
