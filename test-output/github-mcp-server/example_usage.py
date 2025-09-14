@@ -29,7 +29,7 @@ async def main():
                 print(f"- {tool.name}: {tool.description}")
             
             # Example tool calls
-            print(f"\nExecuting: authentication")
+                        print(f"\nExecuting: authentication")
             result = await session.call_tool("authentication", {})
             print(f"Result: {result.content[0].text if result.content else 'No content'}")
             print(f"\nExecuting: mask_authentication")

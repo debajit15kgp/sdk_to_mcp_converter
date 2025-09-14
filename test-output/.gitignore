@@ -1,0 +1,5 @@
+# Generated MCP servers - ignore all generated content
+*/
+
+# But keep the directory structure
+!.gitkeep

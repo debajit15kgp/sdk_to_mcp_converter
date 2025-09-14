@@ -1,0 +1,18 @@
+{
+  "sdk_name": "azure",
+  "sdk_module": "azure.mgmt.resource",
+  "generated_at": "2024-01-01T00:00:00Z",
+  "tools_count": 10,
+  "resources_count": 1,
+  "subscription_id": "YOUR_AZURE_SUBSCRIPTION_ID",
+  "credentials": {
+    "azure_client_id": "YOUR_AZURE_CLIENT_ID",
+    "azure_client_secret": "YOUR_AZURE_CLIENT_SECRET",
+    "azure_tenant_id": "YOUR_AZURE_TENANT_ID"
+  },
+  "settings": {
+    "max_retries": 3,
+    "timeout": 30,
+    "log_level": "INFO"
+  }
+}

@@ -162,7 +162,7 @@ For each method, provide:
 4. Return value description
 5. Any important notes about usage
 
-Format your response as JSON with this structure:
+IMPORTANT: Return ONLY valid JSON. Do not include any explanatory text, comments, or markdown formatting. Just the JSON structure:
 {{
     "tools": [
         {{
@@ -193,7 +193,7 @@ Format your response as JSON with this structure:
     def _parse_llm_response(self, response: str, analyzed_methods: Dict, methods: List[Dict]) -> None:
         """Parse LLM response and update analyzed_methods."""
         try:
-            # Try to parse JSON response
+            # First, try to parse the entire response as JSON
             parsed = json.loads(response)
             
             # Add tools
@@ -205,15 +205,57 @@ Format your response as JSON with this structure:
                 analyzed_methods["resources"].extend(parsed["resources"])
                 
         except json.JSONDecodeError:
-            print(f"Warning: Could not parse LLM response as JSON: {response[:200]}...")
-            # Fallback: create basic tool entries for all methods
-            for method in methods:
-                analyzed_methods["tools"].append({
-                    "name": method["name"],
-                    "description": f"Execute {method['name']} method",
-                    "parameters": method.get("parameters", []),
-                    "return_description": "Method execution result"
-                })
+            # If direct parsing fails, try to extract JSON from the response
+            json_content = self._extract_json_from_response(response)
+            if json_content:
+                try:
+                    parsed = json.loads(json_content)
+                    
+                    # Add tools
+                    if "tools" in parsed:
+                        analyzed_methods["tools"].extend(parsed["tools"])
+                    
+                    # Add resources
+                    if "resources" in parsed:
+                        analyzed_methods["resources"].extend(parsed["resources"])
+                        
+                except json.JSONDecodeError:
+                    print(f"Warning: Could not parse extracted JSON: {json_content[:200]}...")
+                    self._create_fallback_tools(analyzed_methods, methods)
+            else:
+                print(f"Warning: Could not extract JSON from LLM response: {response[:200]}...")
+                self._create_fallback_tools(analyzed_methods, methods)
+    
+    def _extract_json_from_response(self, response: str) -> str:
+        """Extract JSON content from LLM response that may contain explanatory text."""
+        import re
+        
+        # Look for JSON content between ```json and ``` markers
+        json_match = re.search(r'```json\s*(.*?)\s*```', response, re.DOTALL)
+        if json_match:
+            return json_match.group(1).strip()
+        
+        # Look for JSON content between ``` and ``` markers
+        json_match = re.search(r'```\s*(.*?)\s*```', response, re.DOTALL)
+        if json_match:
+            return json_match.group(1).strip()
+        
+        # Look for JSON object starting with {
+        json_match = re.search(r'(\{.*\})', response, re.DOTALL)
+        if json_match:
+            return json_match.group(1).strip()
+        
+        return ""
+    
+    def _create_fallback_tools(self, analyzed_methods: Dict, methods: List[Dict]) -> None:
+        """Create fallback tool entries when JSON parsing fails."""
+        for method in methods:
+            analyzed_methods["tools"].append({
+                "name": method["name"],
+                "description": f"Execute {method['name']} method",
+                "parameters": method.get("parameters", []),
+                "return_description": "Method execution result"
+            })
     
     def _write_output_files(self, mcp_code: Dict[str, str]) -> List[str]:
         """Write generated MCP server files to disk."""

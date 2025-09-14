@@ -178,6 +178,6 @@ Desktop.ini
 *~
 
 # Project-specific
-test-output/
+# test-output/
 *.log
 *.pid

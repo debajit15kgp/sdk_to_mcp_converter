@@ -8,8 +8,8 @@ This MCP server provides AI assistants with access to github functionality throu
 
 ## Features
 
-- **65 Tools**: Execute github operations
-- **0 Resources**: Access github data
+- **21 Tools**: Execute github operations
+- **2 Resources**: Access github data
 - **Authentication**: Secure credential management
 - **Error Handling**: Robust error reporting
 
@@ -45,75 +45,32 @@ Or create a `config.json` file:
 
 ## Available Tools
 
-- **authentication**: Execute authentication operation
-- **mask_authentication**: Execute mask_authentication operation
-- **withRequester**: Execute withRequester operation
-- **close**: Execute close operation
-- **create_from_raw_data**: Execute create_from_raw_data operation
-- **dump**: Execute dump operation
-- **get_app**: Execute get_app operation
-- **get_emojis**: Execute get_emojis operation
-- **get_enterprise**: Execute get_enterprise operation
-- **get_events**: Execute get_events operation
-- **get_gist**: Execute get_gist operation
-- **get_gists**: Execute get_gists operation
-- **get_gitignore_template**: Execute get_gitignore_template operation
-- **get_gitignore_templates**: Execute get_gitignore_templates operation
-- **get_global_advisories**: Execute get_global_advisories operation
-- **get_global_advisory**: Execute get_global_advisory operation
-- **get_hook**: Execute get_hook operation
-- **get_hook_deliveries**: Execute get_hook_deliveries operation
-- **get_hook_delivery**: Execute get_hook_delivery operation
-- **get_hooks**: Execute get_hooks operation
-- **get_license**: Execute get_license operation
-- **get_licenses**: Execute get_licenses operation
-- **get_oauth_application**: Execute get_oauth_application operation
-- **get_organization**: Execute get_organization operation
-- **get_organizations**: Execute get_organizations operation
-- **get_project**: Execute get_project operation
-- **get_project_column**: Execute get_project_column operation
-- **get_rate_limit**: Execute get_rate_limit operation
-- **get_repo**: Execute get_repo operation
-- **get_repos**: Execute get_repos operation
-- **get_repository_discussion**: Execute get_repository_discussion operation
-- **get_user**: Execute get_user operation
-- **get_user_by_id**: Execute get_user_by_id operation
-- **get_users**: Execute get_users operation
-- **load**: Execute load operation
-- **render_markdown**: Execute render_markdown operation
-- **search_code**: Execute search_code operation
-- **search_commits**: Execute search_commits operation
-- **search_issues**: Execute search_issues operation
-- **search_repositories**: Execute search_repositories operation
-- **search_topics**: Execute search_topics operation
-- **search_users**: Execute search_users operation
-- **withLazy**: Execute withLazy operation
-- **close**: Execute close operation
-- **create_jwt**: Execute create_jwt operation
-- **get_access_token**: Execute get_access_token operation
-- **get_app**: Execute get_app operation
-- **get_app_installation**: Execute get_app_installation operation
-- **get_github_for_installation**: Execute get_github_for_installation operation
-- **get_installation**: Execute get_installation operation
-- **get_installations**: Execute get_installations operation
-- **get_org_installation**: Execute get_org_installation operation
-- **get_repo_installation**: Execute get_repo_installation operation
-- **get_user_installation**: Execute get_user_installation operation
-- **withLazy**: Execute withLazy operation
-- **get_backoff_time**: Execute get_backoff_time operation
-- **get_content**: Execute get_content operation
-- **get_retry_after**: Execute get_retry_after operation
-- **increment**: Execute increment operation
-- **is_exhausted**: Execute is_exhausted operation
-- **is_retry**: Execute is_retry operation
-- **new**: Execute new operation
-- **parse_retry_after**: Execute parse_retry_after operation
-- **sleep**: Execute sleep operation
-- **sleep_for_retry**: Execute sleep_for_retry operation
+- **authentication**: This method authenticates the user by validating the headers passed to it.
+- **mask_authentication**: This method masks the authentication details in the headers for security purposes.
+- **withRequester**: This method associates a requester with the current authentication process.
+- **close**: Closes the current Github session.
+- **dump**: Dumps a Python object into a file using a specific protocol.
+- **load**: Loads a Python object from a file.
+- **render_markdown**: Renders a markdown text in a specific context.
+- **withLazy**: Sets the lazy loading mode for the Github class.
+- **close**: Closes the current GithubIntegration instance
+- **create_jwt**: Creates a JSON Web Token with a specified expiration time
+- **get_access_token**: Gets an access token for a specific installation with specified permissions
+- **withLazy**: Sets the lazy loading property of the GithubIntegration instance
+- **get_backoff_time**: Calculates the time to wait before making the next request.
+- **get_retry_after**: Extracts the 'Retry-After' value from the response headers.
+- **increment**: Increments the retry count and raises an error if the maximum retry limit is reached.
+- **is_exhausted**: Checks if the maximum retry limit has been reached.
+- **is_retry**: Determines if the request should be retried based on the HTTP method, status code, and 'Retry-After' header.
+- **new**: Creates a new instance of the GithubRetry class with the same settings.
+- **parse_retry_after**: Parses the 'Retry-After' header value into a number of seconds.
+- **sleep**: Pauses execution for a number of seconds based on the 'Retry-After' header value.
+- **sleep_for_retry**: Pauses execution for a number of seconds based on the 'Retry-After' header value or the backoff time.
 
 ## Available Resources
 
-No resources available.
+- **Github**: A class representing the Github API.
+- **GithubIntegration**: A class for integrating with Github
 
 ## Usage Example
 

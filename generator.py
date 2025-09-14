@@ -448,13 +448,28 @@ auth_manager = AuthenticationManager()
         
         return "\n\n".join(handlers)
     
+    def _sanitize_name_for_function(self, name: str) -> str:
+        """Sanitize a name for use in Python function names."""
+        # Replace spaces and special characters with underscores
+        import re
+        sanitized = re.sub(r'[^a-zA-Z0-9_]', '_', name)
+        # Remove multiple consecutive underscores
+        sanitized = re.sub(r'_+', '_', sanitized)
+        # Remove leading/trailing underscores
+        sanitized = sanitized.strip('_')
+        # Ensure it starts with a letter or underscore
+        if sanitized and not sanitized[0].isalpha() and sanitized[0] != '_':
+            sanitized = '_' + sanitized
+        return sanitized or 'unknown_resource'
+    
     def _generate_single_resource_handler(self, resource: Dict[str, Any], sdk_info: Dict[str, Any]) -> str:
         """Generate handler for a single resource."""
         resource_name = resource.get("name", "unknown_resource")
+        sanitized_name = self._sanitize_name_for_function(resource_name)
         description = resource.get("description", "No description available")
         methods = resource.get("methods", [])
         
-        return f'''async def handle_{resource_name}_resource(resource_id: str) -> ReadResourceResult:
+        return f'''async def handle_{sanitized_name}_resource(resource_id: str) -> ReadResourceResult:
     """Handle {resource_name} resource read.
     
     {description}
@@ -602,7 +617,7 @@ auth_manager = AuthenticationManager()
         description = resource.get("description", "No description")
         
         return f'''                Resource(
-                    uri="{resource_name}://",
+                    uri="kubernetes://resource/{resource_name}",
                     name="{resource_name}",
                     description="{description}",
                     mimeType="application/json"
@@ -629,7 +644,8 @@ auth_manager = AuthenticationManager()
         handlers = []
         for resource in resources:
             resource_name = resource.get("name", "unknown_resource")
-            handlers.append(f'                "{resource_name}": handle_{resource_name}_resource,')
+            sanitized_name = self._sanitize_name_for_function(resource_name)
+            handlers.append(f'                "{resource_name}": handle_{sanitized_name}_resource,')
         return "\n".join(handlers)
     
     def _map_python_type_to_json(self, python_type: str) -> str:

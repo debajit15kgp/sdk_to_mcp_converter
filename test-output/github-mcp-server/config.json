@@ -2,8 +2,8 @@
   "sdk_name": "github",
   "sdk_module": "github",
   "generated_at": "2024-01-01T00:00:00Z",
-  "tools_count": 65,
-  "resources_count": 0,
+  "tools_count": 21,
+  "resources_count": 2,
   "credentials": {},
   "settings": {
     "max_retries": 3,

@@ -2,8 +2,8 @@
   "sdk_name": "kubernetes",
   "sdk_module": "kubernetes.client",
   "generated_at": "2024-01-01T00:00:00Z",
-  "tools_count": 3147,
-  "resources_count": 0,
+  "tools_count": 1909,
+  "resources_count": 419,
   "credentials": {},
   "settings": {
     "max_retries": 3,

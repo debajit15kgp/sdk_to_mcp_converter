@@ -88,14 +88,15 @@ auth_manager = AuthenticationManager()
 async def handle_authentication(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle authentication tool call.
     
-    Execute authentication operation
+    This method authenticates the user by validating the headers passed to it.
     """
     try:
         # Validate required parameters
-
+        if "headers" not in arguments:
+            raise ValueError("Missing required parameter: headers")
         
         # Extract parameters
-
+        headers = arguments.get("headers")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -113,14 +114,15 @@ async def handle_authentication(arguments: Dict[str, Any]) -> List[types.Content
 async def handle_mask_authentication(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle mask_authentication tool call.
     
-    Execute mask_authentication operation
+    This method masks the authentication details in the headers for security purposes.
     """
     try:
         # Validate required parameters
-
+        if "headers" not in arguments:
+            raise ValueError("Missing required parameter: headers")
         
         # Extract parameters
-
+        headers = arguments.get("headers")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -138,14 +140,15 @@ async def handle_mask_authentication(arguments: Dict[str, Any]) -> List[types.Co
 async def handle_withRequester(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle withRequester tool call.
     
-    Execute withRequester operation
+    This method associates a requester with the current authentication process.
     """
     try:
         # Validate required parameters
-
+        if "requester" not in arguments:
+            raise ValueError("Missing required parameter: requester")
         
         # Extract parameters
-
+        requester = arguments.get("requester")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -163,7 +166,7 @@ async def handle_withRequester(arguments: Dict[str, Any]) -> List[types.ContentB
 async def handle_close(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle close tool call.
     
-    Execute close operation
+    Closes the current Github session.
     """
     try:
         # Validate required parameters
@@ -185,42 +188,24 @@ async def handle_close(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
         logger.error(f"Error executing close: {e}")
         return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_create_from_raw_data(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle create_from_raw_data tool call.
-    
-    Execute create_from_raw_data operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"create_from_raw_data executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing create_from_raw_data: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
 async def handle_dump(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle dump tool call.
     
-    Execute dump operation
+    Dumps a Python object into a file using a specific protocol.
     """
     try:
         # Validate required parameters
-
+        if "obj" not in arguments:
+            raise ValueError("Missing required parameter: obj")
+        if "file" not in arguments:
+            raise ValueError("Missing required parameter: file")
+        if "protocol" not in arguments:
+            raise ValueError("Missing required parameter: protocol")
         
         # Extract parameters
-
+        obj = arguments.get("obj")
+        file = arguments.get("file")
+        protocol = arguments.get("protocol")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -235,717 +220,18 @@ async def handle_dump(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
         logger.error(f"Error executing dump: {e}")
         return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_app(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_app tool call.
-    
-    Execute get_app operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_app executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_app: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_emojis(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_emojis tool call.
-    
-    Execute get_emojis operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_emojis executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_emojis: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_enterprise(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_enterprise tool call.
-    
-    Execute get_enterprise operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_enterprise executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_enterprise: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_events(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_events tool call.
-    
-    Execute get_events operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_events executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_events: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_gist(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_gist tool call.
-    
-    Execute get_gist operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_gist executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_gist: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_gists(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_gists tool call.
-    
-    Execute get_gists operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_gists executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_gists: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_gitignore_template(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_gitignore_template tool call.
-    
-    Execute get_gitignore_template operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_gitignore_template executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_gitignore_template: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_gitignore_templates(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_gitignore_templates tool call.
-    
-    Execute get_gitignore_templates operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_gitignore_templates executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_gitignore_templates: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_global_advisories(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_global_advisories tool call.
-    
-    Execute get_global_advisories operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_global_advisories executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_global_advisories: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_global_advisory(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_global_advisory tool call.
-    
-    Execute get_global_advisory operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_global_advisory executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_global_advisory: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_hook(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_hook tool call.
-    
-    Execute get_hook operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_hook executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_hook: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_hook_deliveries(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_hook_deliveries tool call.
-    
-    Execute get_hook_deliveries operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_hook_deliveries executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_hook_deliveries: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_hook_delivery(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_hook_delivery tool call.
-    
-    Execute get_hook_delivery operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_hook_delivery executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_hook_delivery: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_hooks(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_hooks tool call.
-    
-    Execute get_hooks operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_hooks executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_hooks: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_license(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_license tool call.
-    
-    Execute get_license operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_license executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_license: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_licenses(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_licenses tool call.
-    
-    Execute get_licenses operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_licenses executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_licenses: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_oauth_application(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_oauth_application tool call.
-    
-    Execute get_oauth_application operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_oauth_application executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_oauth_application: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_organization(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_organization tool call.
-    
-    Execute get_organization operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_organization executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_organization: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_organizations(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_organizations tool call.
-    
-    Execute get_organizations operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_organizations executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_organizations: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_project(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_project tool call.
-    
-    Execute get_project operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_project executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_project: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_project_column(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_project_column tool call.
-    
-    Execute get_project_column operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_project_column executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_project_column: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_rate_limit(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_rate_limit tool call.
-    
-    Execute get_rate_limit operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_rate_limit executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_rate_limit: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_repo(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_repo tool call.
-    
-    Execute get_repo operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_repo executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_repo: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_repos(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_repos tool call.
-    
-    Execute get_repos operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_repos executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_repos: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_repository_discussion(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_repository_discussion tool call.
-    
-    Execute get_repository_discussion operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_repository_discussion executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_repository_discussion: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_user(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_user tool call.
-    
-    Execute get_user operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_user executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_user: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_user_by_id(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_user_by_id tool call.
-    
-    Execute get_user_by_id operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_user_by_id executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_user_by_id: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_users(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_users tool call.
-    
-    Execute get_users operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_users executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_users: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
 async def handle_load(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle load tool call.
     
-    Execute load operation
+    Loads a Python object from a file.
     """
     try:
         # Validate required parameters
-
+        if "f" not in arguments:
+            raise ValueError("Missing required parameter: f")
         
         # Extract parameters
-
+        f = arguments.get("f")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -963,14 +249,18 @@ async def handle_load(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
 async def handle_render_markdown(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle render_markdown tool call.
     
-    Execute render_markdown operation
+    Renders a markdown text in a specific context.
     """
     try:
         # Validate required parameters
-
+        if "text" not in arguments:
+            raise ValueError("Missing required parameter: text")
+        if "context" not in arguments:
+            raise ValueError("Missing required parameter: context")
         
         # Extract parameters
-
+        text = arguments.get("text")
+        context = arguments.get("context")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -985,167 +275,18 @@ async def handle_render_markdown(arguments: Dict[str, Any]) -> List[types.Conten
         logger.error(f"Error executing render_markdown: {e}")
         return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_search_code(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle search_code tool call.
-    
-    Execute search_code operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"search_code executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing search_code: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_search_commits(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle search_commits tool call.
-    
-    Execute search_commits operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"search_commits executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing search_commits: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_search_issues(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle search_issues tool call.
-    
-    Execute search_issues operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"search_issues executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing search_issues: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_search_repositories(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle search_repositories tool call.
-    
-    Execute search_repositories operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"search_repositories executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing search_repositories: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_search_topics(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle search_topics tool call.
-    
-    Execute search_topics operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"search_topics executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing search_topics: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_search_users(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle search_users tool call.
-    
-    Execute search_users operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"search_users executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing search_users: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
 async def handle_withLazy(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle withLazy tool call.
     
-    Execute withLazy operation
+    Sets the lazy loading mode for the Github class.
     """
     try:
         # Validate required parameters
-
+        if "lazy" not in arguments:
+            raise ValueError("Missing required parameter: lazy")
         
         # Extract parameters
-
+        lazy = arguments.get("lazy")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1163,7 +304,7 @@ async def handle_withLazy(arguments: Dict[str, Any]) -> List[types.ContentBlock]
 async def handle_close(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle close tool call.
     
-    Execute close operation
+    Closes the current GithubIntegration instance
     """
     try:
         # Validate required parameters
@@ -1188,14 +329,15 @@ async def handle_close(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
 async def handle_create_jwt(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle create_jwt tool call.
     
-    Execute create_jwt operation
+    Creates a JSON Web Token with a specified expiration time
     """
     try:
         # Validate required parameters
-
+        if "expiration" not in arguments:
+            raise ValueError("Missing required parameter: expiration")
         
         # Extract parameters
-
+        expiration = arguments.get("expiration")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1213,14 +355,18 @@ async def handle_create_jwt(arguments: Dict[str, Any]) -> List[types.ContentBloc
 async def handle_get_access_token(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_access_token tool call.
     
-    Execute get_access_token operation
+    Gets an access token for a specific installation with specified permissions
     """
     try:
         # Validate required parameters
-
+        if "installation_id" not in arguments:
+            raise ValueError("Missing required parameter: installation_id")
+        if "permissions" not in arguments:
+            raise ValueError("Missing required parameter: permissions")
         
         # Extract parameters
-
+        installation_id = arguments.get("installation_id")
+        permissions = arguments.get("permissions")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1235,217 +381,18 @@ async def handle_get_access_token(arguments: Dict[str, Any]) -> List[types.Conte
         logger.error(f"Error executing get_access_token: {e}")
         return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_app(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_app tool call.
-    
-    Execute get_app operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_app executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_app: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_app_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_app_installation tool call.
-    
-    Execute get_app_installation operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_app_installation executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_app_installation: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_github_for_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_github_for_installation tool call.
-    
-    Execute get_github_for_installation operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_github_for_installation executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_github_for_installation: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_installation tool call.
-    
-    Execute get_installation operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_installation executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_installation: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_installations(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_installations tool call.
-    
-    Execute get_installations operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_installations executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_installations: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_org_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_org_installation tool call.
-    
-    Execute get_org_installation operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_org_installation executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_org_installation: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_repo_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_repo_installation tool call.
-    
-    Execute get_repo_installation operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_repo_installation executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_repo_installation: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
-async def handle_get_user_installation(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_user_installation tool call.
-    
-    Execute get_user_installation operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_user_installation executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_user_installation: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
 async def handle_withLazy(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle withLazy tool call.
     
-    Execute withLazy operation
+    Sets the lazy loading property of the GithubIntegration instance
     """
     try:
         # Validate required parameters
-
+        if "lazy" not in arguments:
+            raise ValueError("Missing required parameter: lazy")
         
         # Extract parameters
-
+        lazy = arguments.get("lazy")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1463,14 +410,15 @@ async def handle_withLazy(arguments: Dict[str, Any]) -> List[types.ContentBlock]
 async def handle_get_backoff_time(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_backoff_time tool call.
     
-    Execute get_backoff_time operation
+    Calculates the time to wait before making the next request.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
         
         # Extract parameters
-
+        self = arguments.get("self")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1485,42 +433,21 @@ async def handle_get_backoff_time(arguments: Dict[str, Any]) -> List[types.Conte
         logger.error(f"Error executing get_backoff_time: {e}")
         return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-async def handle_get_content(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
-    """Handle get_content tool call.
-    
-    Execute get_content operation
-    """
-    try:
-        # Validate required parameters
-
-        
-        # Extract parameters
-
-        
-        # Get authenticated client
-        client = auth_manager.get_authenticated_client()
-        
-        # Execute the SDK method
-        # TODO: Implement actual SDK method call
-        result = {"status": "success", "message": f"get_content executed successfully"}
-        
-        return [types.TextContent(type="text", text=json.dumps(result, indent=2))]
-        
-    except Exception as e:
-        logger.error(f"Error executing get_content: {e}")
-        return [types.TextContent(type="text", text=f"Error: {str(e)}")]
-
 async def handle_get_retry_after(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle get_retry_after tool call.
     
-    Execute get_retry_after operation
+    Extracts the 'Retry-After' value from the response headers.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
+        if "response" not in arguments:
+            raise ValueError("Missing required parameter: response")
         
         # Extract parameters
-
+        self = arguments.get("self")
+        response = arguments.get("response")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1538,14 +465,33 @@ async def handle_get_retry_after(arguments: Dict[str, Any]) -> List[types.Conten
 async def handle_increment(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle increment tool call.
     
-    Execute increment operation
+    Increments the retry count and raises an error if the maximum retry limit is reached.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
+        if "method" not in arguments:
+            raise ValueError("Missing required parameter: method")
+        if "url" not in arguments:
+            raise ValueError("Missing required parameter: url")
+        if "response" not in arguments:
+            raise ValueError("Missing required parameter: response")
+        if "error" not in arguments:
+            raise ValueError("Missing required parameter: error")
+        if "_pool" not in arguments:
+            raise ValueError("Missing required parameter: _pool")
+        if "_stacktrace" not in arguments:
+            raise ValueError("Missing required parameter: _stacktrace")
         
         # Extract parameters
-
+        self = arguments.get("self")
+        method = arguments.get("method")
+        url = arguments.get("url")
+        response = arguments.get("response")
+        error = arguments.get("error")
+        _pool = arguments.get("_pool")
+        _stacktrace = arguments.get("_stacktrace")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1563,14 +509,15 @@ async def handle_increment(arguments: Dict[str, Any]) -> List[types.ContentBlock
 async def handle_is_exhausted(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle is_exhausted tool call.
     
-    Execute is_exhausted operation
+    Checks if the maximum retry limit has been reached.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
         
         # Extract parameters
-
+        self = arguments.get("self")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1588,14 +535,24 @@ async def handle_is_exhausted(arguments: Dict[str, Any]) -> List[types.ContentBl
 async def handle_is_retry(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle is_retry tool call.
     
-    Execute is_retry operation
+    Determines if the request should be retried based on the HTTP method, status code, and 'Retry-After' header.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
+        if "method" not in arguments:
+            raise ValueError("Missing required parameter: method")
+        if "status_code" not in arguments:
+            raise ValueError("Missing required parameter: status_code")
+        if "has_retry_after" not in arguments:
+            raise ValueError("Missing required parameter: has_retry_after")
         
         # Extract parameters
-
+        self = arguments.get("self")
+        method = arguments.get("method")
+        status_code = arguments.get("status_code")
+        has_retry_after = arguments.get("has_retry_after")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1613,14 +570,18 @@ async def handle_is_retry(arguments: Dict[str, Any]) -> List[types.ContentBlock]
 async def handle_new(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle new tool call.
     
-    Execute new operation
+    Creates a new instance of the GithubRetry class with the same settings.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
+        if "kw" not in arguments:
+            raise ValueError("Missing required parameter: kw")
         
         # Extract parameters
-
+        self = arguments.get("self")
+        kw = arguments.get("kw")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1638,14 +599,18 @@ async def handle_new(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
 async def handle_parse_retry_after(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle parse_retry_after tool call.
     
-    Execute parse_retry_after operation
+    Parses the 'Retry-After' header value into a number of seconds.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
+        if "retry_after" not in arguments:
+            raise ValueError("Missing required parameter: retry_after")
         
         # Extract parameters
-
+        self = arguments.get("self")
+        retry_after = arguments.get("retry_after")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1663,14 +628,18 @@ async def handle_parse_retry_after(arguments: Dict[str, Any]) -> List[types.Cont
 async def handle_sleep(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle sleep tool call.
     
-    Execute sleep operation
+    Pauses execution for a number of seconds based on the 'Retry-After' header value.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
+        if "response" not in arguments:
+            raise ValueError("Missing required parameter: response")
         
         # Extract parameters
-
+        self = arguments.get("self")
+        response = arguments.get("response")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1688,14 +657,18 @@ async def handle_sleep(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
 async def handle_sleep_for_retry(arguments: Dict[str, Any]) -> List[types.ContentBlock]:
     """Handle sleep_for_retry tool call.
     
-    Execute sleep_for_retry operation
+    Pauses execution for a number of seconds based on the 'Retry-After' header value or the backoff time.
     """
     try:
         # Validate required parameters
-
+        if "self" not in arguments:
+            raise ValueError("Missing required parameter: self")
+        if "response" not in arguments:
+            raise ValueError("Missing required parameter: response")
         
         # Extract parameters
-
+        self = arguments.get("self")
+        response = arguments.get("response")
         
         # Get authenticated client
         client = auth_manager.get_authenticated_client()
@@ -1710,7 +683,45 @@ async def handle_sleep_for_retry(arguments: Dict[str, Any]) -> List[types.Conten
         logger.error(f"Error executing sleep_for_retry: {e}")
         return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
-# No resources generated
+async def handle_Github_resource(resource_id: str) -> ReadResourceResult:
+    """Handle Github resource read.
+    
+    A class representing the Github API.
+    """
+    try:
+        # Get authenticated client
+        client = auth_manager.get_authenticated_client()
+        
+        # TODO: Implement actual resource reading
+        content = f"Resource {resource_id} data for Github"
+        
+        return ReadResourceResult(
+            contents=[TextContent(type="text", text=content)]
+        )
+        
+    except Exception as e:
+        logger.error(f"Error reading Github resource: {e}")
+        raise Exception(f"Failed to read resource: {str(e)}")
+
+async def handle_GithubIntegration_resource(resource_id: str) -> ReadResourceResult:
+    """Handle GithubIntegration resource read.
+    
+    A class for integrating with Github
+    """
+    try:
+        # Get authenticated client
+        client = auth_manager.get_authenticated_client()
+        
+        # TODO: Implement actual resource reading
+        content = f"Resource {resource_id} data for GithubIntegration"
+        
+        return ReadResourceResult(
+            contents=[TextContent(type="text", text=content)]
+        )
+        
+    except Exception as e:
+        logger.error(f"Error reading GithubIntegration resource: {e}")
+        raise Exception(f"Failed to read resource: {str(e)}")
 
 class GithubMCPServer:
     """MCP Server for github SDK."""
@@ -1728,328 +739,108 @@ class GithubMCPServer:
             return [
                 Tool(
                     name="authentication",
-                    description="Execute authentication operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="This method authenticates the user by validating the headers passed to it.",
+                    inputSchema={'type': 'object', 'properties': {'headers': {'type': 'string', 'description': 'The headers containing the authentication information.'}}, 'required': ['headers']}
                 ),
                 Tool(
                     name="mask_authentication",
-                    description="Execute mask_authentication operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="This method masks the authentication details in the headers for security purposes.",
+                    inputSchema={'type': 'object', 'properties': {'headers': {'type': 'string', 'description': 'The headers containing the authentication information.'}}, 'required': ['headers']}
                 ),
                 Tool(
                     name="withRequester",
-                    description="Execute withRequester operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="This method associates a requester with the current authentication process.",
+                    inputSchema={'type': 'object', 'properties': {'requester': {'type': 'string', 'description': 'The identifier of the requester.'}}, 'required': ['requester']}
                 ),
                 Tool(
                     name="close",
-                    description="Execute close operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="create_from_raw_data",
-                    description="Execute create_from_raw_data operation",
+                    description="Closes the current Github session.",
                     inputSchema={'type': 'object', 'properties': {}, 'required': []}
                 ),
                 Tool(
                     name="dump",
-                    description="Execute dump operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_app",
-                    description="Execute get_app operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_emojis",
-                    description="Execute get_emojis operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_enterprise",
-                    description="Execute get_enterprise operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_events",
-                    description="Execute get_events operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_gist",
-                    description="Execute get_gist operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_gists",
-                    description="Execute get_gists operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_gitignore_template",
-                    description="Execute get_gitignore_template operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_gitignore_templates",
-                    description="Execute get_gitignore_templates operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_global_advisories",
-                    description="Execute get_global_advisories operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_global_advisory",
-                    description="Execute get_global_advisory operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_hook",
-                    description="Execute get_hook operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_hook_deliveries",
-                    description="Execute get_hook_deliveries operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_hook_delivery",
-                    description="Execute get_hook_delivery operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_hooks",
-                    description="Execute get_hooks operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_license",
-                    description="Execute get_license operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_licenses",
-                    description="Execute get_licenses operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_oauth_application",
-                    description="Execute get_oauth_application operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_organization",
-                    description="Execute get_organization operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_organizations",
-                    description="Execute get_organizations operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_project",
-                    description="Execute get_project operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_project_column",
-                    description="Execute get_project_column operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_rate_limit",
-                    description="Execute get_rate_limit operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_repo",
-                    description="Execute get_repo operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_repos",
-                    description="Execute get_repos operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_repository_discussion",
-                    description="Execute get_repository_discussion operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_user",
-                    description="Execute get_user operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_user_by_id",
-                    description="Execute get_user_by_id operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_users",
-                    description="Execute get_users operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Dumps a Python object into a file using a specific protocol.",
+                    inputSchema={'type': 'object', 'properties': {'obj': {'type': 'string', 'description': 'The Python object to be dumped.'}, 'file': {'type': 'string', 'description': 'The file where the object will be dumped.'}, 'protocol': {'type': 'integer', 'description': 'The protocol to be used for dumping the object.'}}, 'required': ['obj', 'file', 'protocol']}
                 ),
                 Tool(
                     name="load",
-                    description="Execute load operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Loads a Python object from a file.",
+                    inputSchema={'type': 'object', 'properties': {'f': {'type': 'string', 'description': 'The file from which the object will be loaded.'}}, 'required': ['f']}
                 ),
                 Tool(
                     name="render_markdown",
-                    description="Execute render_markdown operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="search_code",
-                    description="Execute search_code operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="search_commits",
-                    description="Execute search_commits operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="search_issues",
-                    description="Execute search_issues operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="search_repositories",
-                    description="Execute search_repositories operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="search_topics",
-                    description="Execute search_topics operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="search_users",
-                    description="Execute search_users operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Renders a markdown text in a specific context.",
+                    inputSchema={'type': 'object', 'properties': {'text': {'type': 'string', 'description': 'The markdown text to be rendered.'}, 'context': {'type': 'string', 'description': 'The context in which the markdown will be rendered.'}}, 'required': ['text', 'context']}
                 ),
                 Tool(
                     name="withLazy",
-                    description="Execute withLazy operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Sets the lazy loading mode for the Github class.",
+                    inputSchema={'type': 'object', 'properties': {'lazy': {'type': 'boolean', 'description': 'The lazy loading mode to be set.'}}, 'required': ['lazy']}
                 ),
                 Tool(
                     name="close",
-                    description="Execute close operation",
+                    description="Closes the current GithubIntegration instance",
                     inputSchema={'type': 'object', 'properties': {}, 'required': []}
                 ),
                 Tool(
                     name="create_jwt",
-                    description="Execute create_jwt operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Creates a JSON Web Token with a specified expiration time",
+                    inputSchema={'type': 'object', 'properties': {'expiration': {'type': 'integer', 'description': 'The expiration time of the JWT in seconds'}}, 'required': ['expiration']}
                 ),
                 Tool(
                     name="get_access_token",
-                    description="Execute get_access_token operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_app",
-                    description="Execute get_app operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_app_installation",
-                    description="Execute get_app_installation operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_github_for_installation",
-                    description="Execute get_github_for_installation operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_installation",
-                    description="Execute get_installation operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_installations",
-                    description="Execute get_installations operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_org_installation",
-                    description="Execute get_org_installation operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_repo_installation",
-                    description="Execute get_repo_installation operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_user_installation",
-                    description="Execute get_user_installation operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Gets an access token for a specific installation with specified permissions",
+                    inputSchema={'type': 'object', 'properties': {'installation_id': {'type': 'integer', 'description': 'The ID of the installation'}, 'permissions': {'type': 'object', 'description': 'The permissions for the access token'}}, 'required': ['installation_id', 'permissions']}
                 ),
                 Tool(
                     name="withLazy",
-                    description="Execute withLazy operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Sets the lazy loading property of the GithubIntegration instance",
+                    inputSchema={'type': 'object', 'properties': {'lazy': {'type': 'boolean', 'description': 'The lazy loading property value'}}, 'required': ['lazy']}
                 ),
                 Tool(
                     name="get_backoff_time",
-                    description="Execute get_backoff_time operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
-                ),
-                Tool(
-                    name="get_content",
-                    description="Execute get_content operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Calculates the time to wait before making the next request.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}}, 'required': ['self']}
                 ),
                 Tool(
                     name="get_retry_after",
-                    description="Execute get_retry_after operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Extracts the 'Retry-After' value from the response headers.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}, 'response': {'type': 'string', 'description': 'Response object from the request'}}, 'required': ['self', 'response']}
                 ),
                 Tool(
                     name="increment",
-                    description="Execute increment operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Increments the retry count and raises an error if the maximum retry limit is reached.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}, 'method': {'type': 'string', 'description': 'HTTP method of the request'}, 'url': {'type': 'string', 'description': 'URL of the request'}, 'response': {'type': 'string', 'description': 'Response object from the request'}, 'error': {'type': 'string', 'description': 'Exception raised during the request'}, '_pool': {'type': 'string', 'description': 'Connection pool used for the request'}, '_stacktrace': {'type': 'string', 'description': 'Stack trace of the exception'}}, 'required': ['self', 'method', 'url', 'response', 'error', '_pool', '_stacktrace']}
                 ),
                 Tool(
                     name="is_exhausted",
-                    description="Execute is_exhausted operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Checks if the maximum retry limit has been reached.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}}, 'required': ['self']}
                 ),
                 Tool(
                     name="is_retry",
-                    description="Execute is_retry operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Determines if the request should be retried based on the HTTP method, status code, and 'Retry-After' header.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}, 'method': {'type': 'string', 'description': 'HTTP method of the request'}, 'status_code': {'type': 'string', 'description': 'HTTP status code of the response'}, 'has_retry_after': {'type': 'string', 'description': "Indicates if the 'Retry-After' header is present in the response"}}, 'required': ['self', 'method', 'status_code', 'has_retry_after']}
                 ),
                 Tool(
                     name="new",
-                    description="Execute new operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Creates a new instance of the GithubRetry class with the same settings.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}, 'kw': {'type': 'string', 'description': 'Keyword arguments to pass to the GithubRetry constructor'}}, 'required': ['self', 'kw']}
                 ),
                 Tool(
                     name="parse_retry_after",
-                    description="Execute parse_retry_after operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Parses the 'Retry-After' header value into a number of seconds.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}, 'retry_after': {'type': 'string', 'description': "'Retry-After' header value"}}, 'required': ['self', 'retry_after']}
                 ),
                 Tool(
                     name="sleep",
-                    description="Execute sleep operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Pauses execution for a number of seconds based on the 'Retry-After' header value.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}, 'response': {'type': 'string', 'description': 'Response object from the request'}}, 'required': ['self', 'response']}
                 ),
                 Tool(
                     name="sleep_for_retry",
-                    description="Execute sleep_for_retry operation",
-                    inputSchema={'type': 'object', 'properties': {}, 'required': []}
+                    description="Pauses execution for a number of seconds based on the 'Retry-After' header value or the backoff time.",
+                    inputSchema={'type': 'object', 'properties': {'self': {'type': 'string', 'description': 'Instance of the GithubRetry class'}, 'response': {'type': 'string', 'description': 'Response object from the request'}}, 'required': ['self', 'response']}
                 )
             ]
         
@@ -2061,59 +852,15 @@ class GithubMCPServer:
                 "mask_authentication": handle_mask_authentication,
                 "withRequester": handle_withRequester,
                 "close": handle_close,
-                "create_from_raw_data": handle_create_from_raw_data,
                 "dump": handle_dump,
-                "get_app": handle_get_app,
-                "get_emojis": handle_get_emojis,
-                "get_enterprise": handle_get_enterprise,
-                "get_events": handle_get_events,
-                "get_gist": handle_get_gist,
-                "get_gists": handle_get_gists,
-                "get_gitignore_template": handle_get_gitignore_template,
-                "get_gitignore_templates": handle_get_gitignore_templates,
-                "get_global_advisories": handle_get_global_advisories,
-                "get_global_advisory": handle_get_global_advisory,
-                "get_hook": handle_get_hook,
-                "get_hook_deliveries": handle_get_hook_deliveries,
-                "get_hook_delivery": handle_get_hook_delivery,
-                "get_hooks": handle_get_hooks,
-                "get_license": handle_get_license,
-                "get_licenses": handle_get_licenses,
-                "get_oauth_application": handle_get_oauth_application,
-                "get_organization": handle_get_organization,
-                "get_organizations": handle_get_organizations,
-                "get_project": handle_get_project,
-                "get_project_column": handle_get_project_column,
-                "get_rate_limit": handle_get_rate_limit,
-                "get_repo": handle_get_repo,
-                "get_repos": handle_get_repos,
-                "get_repository_discussion": handle_get_repository_discussion,
-                "get_user": handle_get_user,
-                "get_user_by_id": handle_get_user_by_id,
-                "get_users": handle_get_users,
                 "load": handle_load,
                 "render_markdown": handle_render_markdown,
-                "search_code": handle_search_code,
-                "search_commits": handle_search_commits,
-                "search_issues": handle_search_issues,
-                "search_repositories": handle_search_repositories,
-                "search_topics": handle_search_topics,
-                "search_users": handle_search_users,
                 "withLazy": handle_withLazy,
                 "close": handle_close,
                 "create_jwt": handle_create_jwt,
                 "get_access_token": handle_get_access_token,
-                "get_app": handle_get_app,
-                "get_app_installation": handle_get_app_installation,
-                "get_github_for_installation": handle_get_github_for_installation,
-                "get_installation": handle_get_installation,
-                "get_installations": handle_get_installations,
-                "get_org_installation": handle_get_org_installation,
-                "get_repo_installation": handle_get_repo_installation,
-                "get_user_installation": handle_get_user_installation,
                 "withLazy": handle_withLazy,
                 "get_backoff_time": handle_get_backoff_time,
-                "get_content": handle_get_content,
                 "get_retry_after": handle_get_retry_after,
                 "increment": handle_increment,
                 "is_exhausted": handle_is_exhausted,
@@ -2133,7 +880,18 @@ class GithubMCPServer:
         async def list_resources() -> List[Resource]:
             """List available resources."""
             return [
-
+                Resource(
+                    uri="Github://",
+                    name="Github",
+                    description="A class representing the Github API.",
+                    mimeType="application/json"
+                ),
+                Resource(
+                    uri="GithubIntegration://",
+                    name="GithubIntegration",
+                    description="A class for integrating with Github",
+                    mimeType="application/json"
+                )
             ]
         
         @self.server.read_resource()
@@ -2148,7 +906,8 @@ class GithubMCPServer:
                 resource_id = uri
             
             resource_handlers = {
-
+                "Github": handle_Github_resource,
+                "GithubIntegration": handle_GithubIntegration_resource,
             }
             
             if scheme not in resource_handlers:

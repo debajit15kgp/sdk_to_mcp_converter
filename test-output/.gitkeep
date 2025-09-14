@@ -1,0 +1,2 @@
+# This file ensures the test-output directory is tracked by git
+# even when all generated content is ignored

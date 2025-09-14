@@ -94,26 +94,57 @@ def test_kubernetes_conversion():
 
 
 def test_azure_conversion():
-    """Test converting Azure SDK to MCP server."""
-    print("\n🧪 Testing Azure SDK conversion...")
+    """Test converting comprehensive Azure SDK to MCP server."""
+    print("\n🧪 Testing Comprehensive Azure SDK conversion...")
     
-    # Check if Azure SDK is installed
-    try:
-        import azure.identity
-        import azure.mgmt.resource
-        print("✅ Azure SDK is installed")
-    except ImportError:
-        print("❌ Azure SDK not installed. Install with: pip install azure-identity azure-mgmt-resource")
-        return False
+    # Check if Azure SDK modules are installed
+    azure_modules = [
+        "azure.mgmt.resource",
+        "azure.mgmt.compute",
+        "azure.mgmt.storage", 
+        "azure.mgmt.network",
+        "azure.mgmt.sql",
+        "azure.mgmt.web",
+        "azure.mgmt.containerservice",
+        "azure.mgmt.keyvault",
+        "azure.mgmt.monitor",
+        "azure.mgmt.cosmosdb",
+        "azure.mgmt.redis",
+        "azure.mgmt.search",
+        "azure.mgmt.cognitiveservices",
+        "azure.mgmt.datafactory",
+        "azure.mgmt.eventhub",
+        "azure.mgmt.servicebus",
+        "azure.mgmt.cdn",
+        "azure.mgmt.dns",
+        "azure.mgmt.security",
+        "azure.mgmt.authorization"
+    ]
     
-    # Create configuration
+    installed_modules = []
+    missing_modules = []
+    
+    for module in azure_modules:
+        try:
+            __import__(module)
+            installed_modules.append(module)
+        except ImportError:
+            missing_modules.append(module)
+    
+    print(f"✅ Azure modules installed: {len(installed_modules)}")
+    if missing_modules:
+        print(f"⚠️  Missing modules: {len(missing_modules)}")
+        print(f"   Install with: pip install {' '.join([m.replace('azure.mgmt.', 'azure-mgmt-') for m in missing_modules if 'mgmt' in m])}")
+    
+    # Convert the most comprehensive Azure module (Resource Management)
+    # This module includes many sub-modules and will give us the most coverage
     config = ConversionConfig(
-        sdk_name="azure",
-        sdk_module="azure.mgmt.resource",
-        output_dir="./test-output/azure-mcp-server",
+        sdk_name="azure-comprehensive",
+        sdk_module="azure.mgmt.resource",  # Start with resource management
+        output_dir="./test-output/azure-comprehensive-mcp-server",
         openai_api_key=os.getenv("OPENAI_API_KEY"),
         include_private_methods=False,
-        max_methods_per_tool=25,
+        max_methods_per_tool=100,  # Increased for comprehensive coverage
         generate_tests=True
     )
     
@@ -122,16 +153,168 @@ def test_azure_conversion():
         converter = SDKToMCPConverter(config)
         result = converter.convert()
         
-        print(f"✅ Azure conversion successful!")
+        print(f"✅ Azure comprehensive conversion successful!")
         print(f"📁 Output: {config.output_dir}")
         print(f"🔧 Methods: {result['methods_discovered']}")
         print(f"🛠️  Tools: {result['tools_generated']}")
+        print(f"📊 Coverage: {len(installed_modules)} Azure modules available")
         
         return True
         
     except Exception as e:
         print(f"❌ Azure conversion failed: {e}")
         return False
+
+
+def test_azure_multiple_modules():
+    """Test converting multiple Azure modules individually."""
+    print("\n🧪 Testing Multiple Azure Modules conversion...")
+    
+    # Define Azure modules to convert (comprehensive list)
+    azure_configs = [
+        {
+            "name": "azure-compute",
+            "module": "azure.mgmt.compute",
+            "description": "Virtual machines, VM scalesets, disks, snapshots"
+        },
+        {
+            "name": "azure-storage", 
+            "module": "azure.mgmt.storage",
+            "description": "Storage accounts, blobs, files, queues"
+        },
+        {
+            "name": "azure-network",
+            "module": "azure.mgmt.network", 
+            "description": "Virtual networks, load balancers, security groups"
+        },
+        {
+            "name": "azure-containerservice",
+            "module": "azure.mgmt.containerservice",
+            "description": "Kubernetes clusters, container registries"
+        },
+        {
+            "name": "azure-keyvault",
+            "module": "azure.mgmt.keyvault",
+            "description": "Key vaults, secrets, certificates, keys"
+        },
+        {
+            "name": "azure-monitor",
+            "module": "azure.mgmt.monitor",
+            "description": "Monitoring, metrics, alerts, diagnostic settings"
+        },
+        {
+            "name": "azure-cosmosdb",
+            "module": "azure.mgmt.cosmosdb",
+            "description": "Cosmos DB databases, containers, throughput"
+        },
+        {
+            "name": "azure-sql",
+            "module": "azure.mgmt.sql",
+            "description": "SQL databases, servers, elastic pools"
+        },
+        {
+            "name": "azure-web",
+            "module": "azure.mgmt.web",
+            "description": "Web apps, App Service plans, functions"
+        },
+        {
+            "name": "azure-redis",
+            "module": "azure.mgmt.redis",
+            "description": "Redis caches, firewall rules, patches"
+        },
+        {
+            "name": "azure-search",
+            "module": "azure.mgmt.search",
+            "description": "Search services, indexes, data sources"
+        },
+        {
+            "name": "azure-cognitiveservices",
+            "module": "azure.mgmt.cognitiveservices",
+            "description": "Cognitive Services accounts, deployments"
+        },
+        {
+            "name": "azure-datafactory",
+            "module": "azure.mgmt.datafactory",
+            "description": "Data Factory pipelines, datasets, linked services"
+        },
+        {
+            "name": "azure-eventhub",
+            "module": "azure.mgmt.eventhub",
+            "description": "Event Hubs namespaces, hubs, consumer groups"
+        },
+        {
+            "name": "azure-servicebus",
+            "module": "azure.mgmt.servicebus",
+            "description": "Service Bus namespaces, queues, topics"
+        },
+        {
+            "name": "azure-cdn",
+            "module": "azure.mgmt.cdn",
+            "description": "CDN profiles, endpoints, custom domains"
+        },
+        {
+            "name": "azure-dns",
+            "module": "azure.mgmt.dns",
+            "description": "DNS zones, records, virtual network links"
+        },
+        {
+            "name": "azure-security",
+            "module": "azure.mgmt.security",
+            "description": "Security Center assessments, recommendations"
+        },
+        {
+            "name": "azure-authorization",
+            "module": "azure.mgmt.authorization",
+            "description": "Role assignments, definitions, permissions"
+        }
+    ]
+    
+    results = []
+    total_methods = 0
+    total_tools = 0
+    
+    for config_info in azure_configs:
+        print(f"\n🔄 Converting {config_info['name']} - {config_info['description']}")
+        
+        try:
+            # Check if module is available
+            __import__(config_info['module'])
+            
+            config = ConversionConfig(
+                sdk_name=config_info['name'],
+                sdk_module=config_info['module'],
+                output_dir=f"./test-output/{config_info['name']}-mcp-server",
+                openai_api_key=os.getenv("OPENAI_API_KEY"),
+                include_private_methods=False,
+                max_methods_per_tool=50,
+                generate_tests=True
+            )
+            
+            converter = SDKToMCPConverter(config)
+            result = converter.convert()
+            
+            methods = result['methods_discovered']
+            tools = result['tools_generated']
+            total_methods += methods
+            total_tools += tools
+            
+            print(f"✅ {config_info['name']}: {methods} methods, {tools} tools")
+            results.append(True)
+            
+        except ImportError:
+            print(f"⚠️  {config_info['name']}: Module not installed")
+            results.append(False)
+        except Exception as e:
+            print(f"❌ {config_info['name']}: Failed - {e}")
+            results.append(False)
+    
+    successful = sum(results)
+    print(f"\n📊 Azure Multi-Module Results:")
+    print(f"✅ Successful: {successful}/{len(azure_configs)}")
+    print(f"🔧 Total Methods: {total_methods}")
+    print(f"🛠️  Total Tools: {total_tools}")
+    
+    return successful > 0
 
 
 def main():
@@ -151,13 +334,16 @@ def main():
     results = []
     
     # Test GitHub conversion
-    results.append(test_github_conversion())
+    # results.append(test_github_conversion())
     
     # Test Kubernetes conversion
-    results.append(test_kubernetes_conversion())
+    # results.append(test_kubernetes_conversion())
     
-    # Test Azure conversion
+    # Test comprehensive Azure conversion
     results.append(test_azure_conversion())
+    
+    # Test multiple Azure modules for comprehensive coverage
+    results.append(test_azure_multiple_modules())
     
     # Summary
     print("\n" + "=" * 50)
