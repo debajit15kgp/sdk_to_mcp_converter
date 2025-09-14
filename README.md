@@ -59,37 +59,6 @@ sdk_to_mcp_converter/
     └── SDK_FUNCTIONS_ANALYSIS.md # SDK analysis results
 ```
 
-## 🛠️ How to Use
-
-### Method 1: Using example.py (Recommended)
-
-The `example.py` script provides a simple way to convert SDKs:
-
-```bash
-# Set your OpenAI API key
-export OPENAI_API_KEY="sk-proj-your-key-here"
-
-# Run the converter
-python example.py
-```
-
-**What it does:**
-- Converts Kubernetes SDK → MCP server with 1,900+ tools
-- Converts Azure SDK → MCP server  
-- Generates complete servers in `./test-output/`
-
-### Method 2: Using cli.py (Advanced)
-
-For command-line usage:
-
-```bash
-python cli.py convert \
-  --sdk-name kubernetes \
-  --sdk-module kubernetes.client \
-  --output-dir ./my-k8s-server \
-  --openai-api-key $OPENAI_API_KEY
-```
-
 ## 🔧 Configuration Options
 
 ### Basic Configuration
