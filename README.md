@@ -31,7 +31,6 @@ sdk_to_mcp_converter/
 ├── requirements.txt             # Python dependencies
 ├── setup.py                     # Package setup
 ├── example.py                   # Main example script to run conversions
-├── demo.py                      # Interactive demo script
 ├── cli.py                       # Command-line interface
 ├── converter.py                 # Core conversion logic
 ├── generator.py                 # MCP server code generation
@@ -79,20 +78,7 @@ python example.py
 - Converts Azure SDK → MCP server  
 - Generates complete servers in `./test-output/`
 
-### Method 2: Using demo.py (Interactive)
-
-For an interactive experience:
-
-```bash
-python demo.py
-```
-
-This provides a menu-driven interface to:
-- Choose which SDK to convert
-- Configure conversion options
-- Run conversions step by step
-
-### Method 3: Using cli.py (Advanced)
+### Method 2: Using cli.py (Advanced)
 
 For command-line usage:
 
@@ -241,47 +227,6 @@ export AZURE_SUBSCRIPTION_ID="your-subscription-id"
 3. **Generation**: Creates complete MCP server code
 4. **Documentation**: Generates README, examples, and tests
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**1. OpenAI API Key Not Set**
-```bash
-# Solution: Set the environment variable
-export OPENAI_API_KEY="sk-proj-your-key-here"
-```
-
-**2. SDK Not Installed**
-```bash
-# Solution: Install the required SDK
-pip install kubernetes  # for Kubernetes
-pip install PyGithub    # for GitHub
-pip install azure-mgmt-resource  # for Azure
-```
-
-**3. Permission Errors**
-```bash
-# Solution: Ensure write permissions
-chmod 755 ./test-output/
-```
-
-**4. Function Name Errors**
-```bash
-# This has been fixed in the latest version
-# If you see syntax errors, regenerate the server
-python example.py
-```
-
-### Debug Mode
-
-For detailed debugging:
-
-```bash
-# Enable debug logging
-export LOG_LEVEL=DEBUG
-python example.py
-```
-
 ## 📈 Performance
 
 | SDK | Methods Analyzed | Tools Generated | Generation Time |
@@ -291,50 +236,6 @@ python example.py
 | Azure | 500+ | 200+ | ~3-5 minutes |
 
 *Times depend on OpenAI API response speed and network conditions.*
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
-### Development Setup
-
-```bash
-# Install in development mode
-pip install -e .
-
-# Run tests
-python -m pytest tests/
-
-# Format code
-black sdk_to_mcp_converter/
-
-# Type checking
-mypy sdk_to_mcp_converter/
-```
-
-## 📄 License
-
-MIT License - see LICENSE file for details.
-
-## 🎯 Roadmap
-
-- [ ] Support for more SDKs (AWS, Google Cloud, etc.)
-- [ ] Custom tool grouping strategies
-- [ ] Advanced authentication patterns
-- [ ] MCP server optimization
-- [ ] Web UI for conversion
-- [ ] Real-time conversion monitoring
-
-## 🙏 Acknowledgments
-
-- Built for the MCP (Model Context Protocol) ecosystem
-- Inspired by the need for comprehensive SDK integration in AI assistants
-- Uses OpenAI's API for intelligent method analysis
-- Generated servers are fully compatible with MCP clients
 
 ---
 
